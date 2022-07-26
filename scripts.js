@@ -1,7 +1,3 @@
-// let title = form input
-// let year = form input
-// let read = form input
-
 const libraryContainer = document.getElementById("library");
 const addBookButton = document.getElementById("addBookButton");
 
@@ -22,14 +18,26 @@ class Library {
     this.renderLibrary();
   }
 
+  //edit
+
+  editBook(i, prop, newvalue) {
+    this.myLibrary[i][prop] = newvalue;
+    console.log(i, prop, newvalue);
+    console.log(this.myLibrary);
+  }
+
   //render Library on page
+
+  clearLibrary() {
+    while (libraryContainer.firstChild) {
+      libraryContainer.removeChild(libraryContainer.firstChild);
+    }
+  }
 
   renderLibrary() {
     //clear library
 
-    while (libraryContainer.firstChild) {
-      libraryContainer.removeChild(libraryContainer.firstChild);
-    }
+    this.clearLibrary();
 
     // render books
 
@@ -38,23 +46,41 @@ class Library {
 
   renderBookElements() {
     // draw and append markup and buttons for each book in library
-
+    this.myLibrary.sort((a,b) => (a.title > b.title) ? 1 : -1);
+    this.myLibrary.sort((a,b) => (a.read == true) ? 1 : -1);
+    
     for (let i = 0; i < this.myLibrary.length; i++) {
       let book = this.myLibrary[i];
       let index = this.myLibrary.indexOf(book);
+      let $this = this;
 
       let bookContainer = document.createElement("div");
-      bookContainer.setAttribute("class", "book");
       let deleteButton = document.createElement("button");
       deleteButton.setAttribute("class", "btn");
       deleteButton.textContent = "Remove";
       let markReadIcon = document.createElement("img");
-      markReadIcon.setAttribute("class","markReadIcon");
-        if(book.read == true){
-      markReadIcon.src = "./img/book.svg";}
-            else {markReadIcon.src = "./img/book-open.svg"
-        };
-    
+      markReadIcon.setAttribute("class", "markReadIcon");
+
+      if (book.read == true) {
+        markReadIcon.src = "./img/book.svg";
+        bookContainer.setAttribute("class", "book read");
+        markReadIcon.addEventListener("click", function () {
+          $this.editBook(index, "read", false);
+          markReadIcon.src = "./img/book-open.svg";
+          ;
+          $this.clearLibrary();
+          $this.renderBookElements();
+        });
+      } else {
+        markReadIcon.src = "./img/book-open.svg";
+        bookContainer.setAttribute("class", "book");
+        markReadIcon.addEventListener("click", function () {
+          $this.editBook(index, "read", true);
+          markReadIcon.src = "./img/book.svg";
+          $this.clearLibrary();
+          $this.renderBookElements();
+        });
+      }
 
       bookContainer.appendChild(deleteButton);
       bookContainer.appendChild(markReadIcon);
@@ -80,24 +106,17 @@ class Book {
   //draw the markup for a books html element
 
   drawBook() {
-    let readBool = () => {
-      if (this.read == true) {
-        return "finished";
-      } else {
-        return "not finished";
-      }
-    };
-
     const markup = `<div id="">
                         <h1>${this.title}</h1>
                         <h4>${this.author}</h4>
-                        <p>You have ${readBool()} this book.</p>
                         </div>
                         `;
 
     return markup;
   }
 }
+
+//initialize library
 
 const library = new Library();
 
@@ -106,6 +125,8 @@ const library = new Library();
 library.addBook("The Great Gatsby", "F. Scott Fitzgerald", true);
 
 library.addBook("Nineteen Eighty-Four", "George Orwell", false);
+
+//initialize page
 
 library.renderLibrary();
 

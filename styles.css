@@ -45,7 +45,7 @@ p{
 
 .book{
     position: relative;
-    background-color: #0C0910;
+    background-color: #4E878C;
     color: white;
     font-family: 'Merriweather', serif;
     padding: 1rem;
@@ -53,6 +53,11 @@ p{
     width:200px;
     display: grid;
     border-radius: 0.5rem;
+}
+
+.read{
+background-color: #121113;
+color: white;
 }
 
 
