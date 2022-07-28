@@ -8,7 +8,7 @@
 
 body{
     display: grid;
-    grid-template-rows:60px 1fr 60px;
+    grid-template-rows:60px 1fr auto;
     width: 100vw;
 }
 
@@ -20,7 +20,7 @@ p{
     font-size: 10px;
     padding: 0.2rem;
 }
-.header{
+header{
     display: flex;
     background-color:whitesmoke;
     align-items: center;
@@ -29,11 +29,20 @@ p{
 }
 
 #addBookForm{
-    background-color:whitesmoke;
     padding: 1rem;
     font-family: 'Merriweather', serif;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
+    gap: 1rem;
+    max-width: 700px;
+    flex-wrap: wrap;
+}
+
+footer{
+    background-color:whitesmoke;
+    padding: 1rem;
+    width: 100pw;
+
 }
 
 #library {
@@ -61,9 +70,6 @@ color: white;
 }
 
 
-#addBookForm{
-
-}
 
 .btn{
     font-family: 'Merriweather', serif;
@@ -77,6 +83,9 @@ color: white;
     position: absolute;
     right: 0.5rem;
     top: 0.5rem;
+}
 
-    
+.inputFormatting{
+    display: flex;
+    gap: 1rem;
 }
